@@ -10,11 +10,14 @@
 
 
 <script>
-
-    let winner = 0;
-    let humanScore = 0;
+    let playerScore = 0;
     let computerScore = 0;
 
+    alert( 'Welcome to rock, paper, scissors!')
+
+    playGame();
+
+    //Calculates Computer's turn
     function computerPlay() {
         let number = Math.floor(Math.random() * (3 + 1));
         if(number == 1)
@@ -23,51 +26,46 @@
             return 'Paper';
         else return 'Scissors';
     }
-    alert( 'Welcome to rock, paper, scissors!')
-    game();
-
-    function game() {
-        while ( humanScore < 3 && computerScore < 3 ) {
+    //Plays three rounds of rock, paper, scissors.
+    function playGame() {
+        while ( playerScore < 3 && computerScore < 3 ) {
             let playerSelection = prompt(' Enter Rock, Paper, or Scissors');
             let computerSelection = computerPlay();
             playerSelection = playerSelection.toUpperCase();
             computerSelection = computerSelection.toUpperCase();
             console.log(playRound(playerSelection, computerSelection));
         }
-        win_condition();
+        checkWinner();
     }
 
-
+    // Plays one round.
     function playRound(playerSelection, computerSelection) {
-        if( playerSelection === 'ROCK' && computerSelection === 'SCISSORS') {
-            humanScore +=1;
-            return playerSelection + ' wins vs ' + computerSelection + '. Congratulations!';
-        } else if( playerSelection === 'ROCK' && computerSelection === 'PAPER') {
-            computerScore +=1;
-            return playerSelection + ' loses vs ' + computerSelection + '. Try again!';
-        } else if( playerSelection === 'ROCK' && computerSelection === 'ROCK') {
-            return playerSelection + ' ties with ' + computerSelection + '. Try again!';
-        } else if( playerSelection === 'PAPER' && computerSelection === 'ROCK') {
-            humanScore +=1;
-            return playerSelection + ' wins vs ' + computerSelection + '. Congratulations!';
-        } else if( playerSelection === 'PAPER' && computerSelection === 'PAPER') {
-            return playerSelection + ' ties with ' + computerSelection + '. Try again!';
-        } else if( playerSelection === 'PAPER' && computerSelection === 'SCISSORS') {
-            computerScore +=1;
-            return playerSelection + ' loses vs ' + computerSelection + '. Try again!';
-        } else if( playerSelection === 'SCISSORS' && computerSelection === 'SCISSORS') {
-            return playerSelection + ' ties with ' + computerSelection + '. Try again!';
-        } else if( playerSelection === 'SCISSORS' && computerSelection === 'PAPER') {
-            humanScore += 1;
-            return playerSelection + ' wins vs ' +computerSelection + '. Congratulations!';
-        } else if( playerSelection === 'SCISSORS' && computerSelection === 'ROCK') {
-            computerScore +=1;
-            return playerSelection + ' loses vs ' + computerSelection + '. Try again!';
-        } else return 'Enter a valid move! Refresh the damn page!';
+
+        switch (playerSelection + computerSelection) {
+
+            case 'ROCKSCISSORS':
+            case 'PAPERROCK':
+            case 'SCISSORSPAPER':
+                playerScore +=1;
+                return playerSelection + ' wins vs ' + computerSelection + '. Congratulations!';
+
+            case 'ROCKPAPER':
+            case 'PAPERSCISSORS':
+            case 'SCISSORSROCK':
+                computerScore +=1;
+                return playerSelection + ' loses vs ' + computerSelection + '. Try again!';
+
+            case 'ROCKROCK':
+            case 'PAPERPAPER':
+            case 'SCISSORSSCISSORS':
+                return playerSelection + ' ties with ' + computerSelection + '. Try again!';
+
+        }
     }
 
-    function win_condition() {
-        if( humanScore >= 3 ) {
+    //Displays winner of the game.
+    function checkWinner() {
+        if( playerScore >= 3 ) {
             console.log('Player Wins!');
         }
         if( computerScore >= 3 ) {
