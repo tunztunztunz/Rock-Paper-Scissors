@@ -3,19 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Rock Paper Scissors</title>
+
+    <link href="styles.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 
+  <div id="container">
+    <button id="button-rock">ROCK</button>
+    <button id="button-paper">PAPER</button>
+    <button id="button-scissors">SCISSORS</button>
+
+    <br>
+
+    <div id="results">
+
+    <br>
+
+    <div id="scoreboard">
 
 
+
+
+
+
+
+
+
+  </div>
 
 <script>
+
     let playerScore = 0;
     let computerScore = 0;
+    let playerSelection;
+
+    const rockButton = document.getElementById('button-rock');
+    const paperButton = document.getElementById('button-paper');
+    const scissorsButton = document.getElementById('button-scissors');
+    const results = document.getElementById('results');
+    const scoreboard = document.getElementById('scoreboard');
 
     alert( 'Welcome to rock, paper, scissors!')
 
-    playGame();
+    // playGame();
 
     //Calculates Computer's turn
     function computerPlay() {
@@ -26,14 +57,12 @@
             return 'Paper';
         else return 'Scissors';
     }
-    //Plays three rounds of rock, paper, scissors.
+    // Plays three rounds of rock, paper, scissors.
     function playGame() {
-        while ( playerScore < 3 && computerScore < 3 ) {
-            let playerSelection = prompt(' Enter Rock, Paper, or Scissors');
+        while ( playerScore < 5 && computerScore < 5 ) {
             let computerSelection = computerPlay();
-            playerSelection = playerSelection.toUpperCase();
             computerSelection = computerSelection.toUpperCase();
-            console.log(playRound(playerSelection, computerSelection));
+            results.textContent = playRound(playerSelection, computerSelection);
         }
         checkWinner();
     }
@@ -41,39 +70,71 @@
     // Plays one round.
     function playRound(playerSelection, computerSelection) {
 
+
+
         switch (playerSelection + computerSelection) {
 
             case 'ROCKSCISSORS':
             case 'PAPERROCK':
             case 'SCISSORSPAPER':
                 playerScore +=1;
-                return playerSelection + ' wins vs ' + computerSelection + '. Congratulations!';
+                return playerSelection + ' wins vs ' + computerSelection +
+                '. Congratulations!';
 
             case 'ROCKPAPER':
             case 'PAPERSCISSORS':
             case 'SCISSORSROCK':
                 computerScore +=1;
-                return playerSelection + ' loses vs ' + computerSelection + '. Try again!';
+                return playerSelection + ' loses vs ' + computerSelection +
+                '. Try again!';
 
             case 'ROCKROCK':
             case 'PAPERPAPER':
             case 'SCISSORSSCISSORS':
-                return playerSelection + ' ties with ' + computerSelection + '. Try again!';
+                return playerSelection + ' ties with ' + computerSelection +
+                '. Try again!';
 
         }
     }
 
     //Displays winner of the game.
     function checkWinner() {
-        if( playerScore >= 3 ) {
+        if( playerScore >= 5 ) {
             console.log('Player Wins!');
         }
-        if( computerScore >= 3 ) {
+        if( computerScore >= 5 ) {
             console.log('Computer Wins!');
         }
     }
 
+function main() {
 
+
+  rockButton.addEventListener('click', function() {
+    computerSelection = computerPlay();
+    computerSelection = computerSelection.toUpperCase();
+    playerSelection = "Rock";
+    playerSelection = playerSelection.toUpperCase();
+    results.textContent = playRound(playerSelection, computerSelection);
+  });
+  paperButton.addEventListener('click', function () {
+    computerSelection = computerPlay();
+    computerSelection = computerSelection.toUpperCase();
+    playerSelection = "Paper";
+    playerSelection = playerSelection.toUpperCase();
+    results.textContent = playRound(playerSelection, computerSelection);
+  });
+  scissorsButton.addEventListener('click', function () {
+    computerSelection = computerPlay();
+    computerSelection = computerSelection.toUpperCase();
+    playerSelection = "Scissors";
+    playerSelection = playerSelection.toUpperCase();
+    results.textContent = playRound(playerSelection, computerSelection);
+  });
+
+}
+
+main();
 
 
 
