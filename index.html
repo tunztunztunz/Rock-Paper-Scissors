@@ -9,18 +9,34 @@
 </head>
 <body>
 
-  <div id="container">
-    <button id="button-rock">ROCK</button>
-    <button id="button-paper">PAPER</button>
-    <button id="button-scissors">SCISSORS</button>
+
+
+<div id="wrapper">
+    <br>
+
+      <div id="results" class="information">Make a selection</div>
 
     <br>
 
-    <div id="results">
+    <div id="player-board" class="information">Player Score: 0</div>
 
     <br>
 
-    <div id="scoreboard">
+    <div id="computer-board" class="information">Computer Score: 0</div>
+
+    <br>
+
+    <div id="ties-board" class="information">Ties: 0</div>
+
+    <br>
+
+    <div  class="information" id="button-wrap" >
+        <button id="button-rock" class="buttons" >ROCK</button>
+        <button id="button-paper" class="buttons">PAPER</button>
+        <button id="button-scissors" class="buttons">SCISSORS</button>
+        <button id="button-reset" class="buttons">RESET</button>
+    </div>
+</div>
 
 
 
@@ -30,19 +46,24 @@
 
 
 
-  </div>
+
+
 
 <script>
 
     let playerScore = 0;
     let computerScore = 0;
+    let ties= 0;
     let playerSelection;
 
     const rockButton = document.getElementById('button-rock');
     const paperButton = document.getElementById('button-paper');
     const scissorsButton = document.getElementById('button-scissors');
+    const resetButton = document.getElementById('button-reset');
     const results = document.getElementById('results');
-    const scoreboard = document.getElementById('scoreboard');
+    const playerScoreBoard = document.getElementById('player-board');
+    const computerScoreBoard = document.getElementById('computer-board');
+    const tieScoreBoard = document.getElementById('ties-board');
 
     alert( 'Welcome to rock, paper, scissors!')
 
@@ -58,83 +79,103 @@
         else return 'Scissors';
     }
     // Plays three rounds of rock, paper, scissors.
-    function playGame() {
-        while ( playerScore < 5 && computerScore < 5 ) {
-            let computerSelection = computerPlay();
-            computerSelection = computerSelection.toUpperCase();
-            results.textContent = playRound(playerSelection, computerSelection);
-        }
-        checkWinner();
-    }
+    // function playGame() {
+    //     while ( playerScore < 5 && computerScore < 5 ) {
+    //         let computerSelection = computerPlay();
+    //         computerSelection = computerSelection.toUpperCase();
+    //         results.textContent = playRound(playerSelection, computerSelection);
+    //     }
+    //     checkWinner();
+    // }
 
     // Plays one round.
     function playRound(playerSelection, computerSelection) {
 
+        if (playerScore < 5 && computerScore < 5) {
+
+            switch (playerSelection + computerSelection) {
+                case 'ROCKSCISSORS':
+                case 'PAPERROCK':
+                case 'SCISSORSPAPER':
+                    playerScore +=1;
+                    playerScoreBoard.textContent = 'Player Score: ' + playerScore;
+                    results.textContent = playerSelection + ' wins vs ' + computerSelection +
+                        '. Congratulations!';
+                    break;
+
+                case 'ROCKPAPER':
+                case 'PAPERSCISSORS':
+                case 'SCISSORSROCK':
+                    computerScore +=1;
+                    computerScoreBoard.textContent = 'Computer Score: ' + computerScore;
+                    results.textContent = playerSelection + ' loses vs ' + computerSelection +
+                        '. Try again!';
+                    break;
 
 
-        switch (playerSelection + computerSelection) {
+                case 'ROCKROCK':
+                case 'PAPERPAPER':
+                case 'SCISSORSSCISSORS':
+                    ties += 1;
+                    tieScoreBoard.textContent = 'Ties: ' + ties;
+                    results.textContent = playerSelection + ' ties with ' + computerSelection +
+                        '. Try again!';
+                    break;
+            }
 
-            case 'ROCKSCISSORS':
-            case 'PAPERROCK':
-            case 'SCISSORSPAPER':
-                playerScore +=1;
-                return playerSelection + ' wins vs ' + computerSelection +
-                '. Congratulations!';
+        } else checkWinner();
 
-            case 'ROCKPAPER':
-            case 'PAPERSCISSORS':
-            case 'SCISSORSROCK':
-                computerScore +=1;
-                return playerSelection + ' loses vs ' + computerSelection +
-                '. Try again!';
 
-            case 'ROCKROCK':
-            case 'PAPERPAPER':
-            case 'SCISSORSSCISSORS':
-                return playerSelection + ' ties with ' + computerSelection +
-                '. Try again!';
 
-        }
     }
 
     //Displays winner of the game.
     function checkWinner() {
         if( playerScore >= 5 ) {
-            console.log('Player Wins!');
+            results.textContent = 'YOU WIN!';
         }
         if( computerScore >= 5 ) {
-            console.log('Computer Wins!');
+            results.textContent = 'COMPUTER WINS!';
         }
     }
 
-function main() {
+    main();
 
+    function main() {
 
   rockButton.addEventListener('click', function() {
     computerSelection = computerPlay();
     computerSelection = computerSelection.toUpperCase();
     playerSelection = "Rock";
     playerSelection = playerSelection.toUpperCase();
-    results.textContent = playRound(playerSelection, computerSelection);
+    playRound(playerSelection, computerSelection);
   });
   paperButton.addEventListener('click', function () {
     computerSelection = computerPlay();
     computerSelection = computerSelection.toUpperCase();
     playerSelection = "Paper";
     playerSelection = playerSelection.toUpperCase();
-    results.textContent = playRound(playerSelection, computerSelection);
+    playRound(playerSelection, computerSelection);
   });
   scissorsButton.addEventListener('click', function () {
     computerSelection = computerPlay();
     computerSelection = computerSelection.toUpperCase();
     playerSelection = "Scissors";
     playerSelection = playerSelection.toUpperCase();
-    results.textContent = playRound(playerSelection, computerSelection);
+    playRound(playerSelection, computerSelection);
   });
+  resetButton.addEventListener('click', function () {
+      playerScore = 0;
+      computerScore = 0;
+      ties = 0;
+      playerScoreBoard.textContent = 'Player Score: 0';
+      computerScoreBoard.textContent = 'Computer Score: 0';
+      tieScoreBoard.textContent = 'Ties: 0';
+  })
 
 }
 
-main();
+
 
 
 

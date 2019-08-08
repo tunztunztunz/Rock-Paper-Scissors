@@ -1,0 +1,19 @@
+#wrapper {
+    text-align: center;
+}
+
+.information {
+    display: inline-block;
+    margin: 10px 10px;
+    border: solid black 2px;
+    padding: 10px 10px;
+}
+
+.buttons {
+    padding: 10px 10px;
+    font-size: 16px;
+}
+
+#button-wrap {
+    border: none;
+}
